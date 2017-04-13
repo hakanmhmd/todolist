@@ -1,0 +1,25 @@
+<body>
+    <div class="container">
+        <header>
+            <h1>To Do List {{#if currentUser}} - {{incompleteCount}} tasks to completed {{/if}}</h1>
+            <label class="hide-completed">
+                <input type="checkbox" /> Hide Completed Tasks
+            </label>
+            {{> loginButtons}}
+            {{#if currentUser}}
+            <form class="new-task">
+                <input type="text" name="text" placeholder="New task" />
+            </form>
+            {{/if}}
+        </header>
+        
+        {{#if currentUser}}
+        <ul>
+            {{#each tasks}} {{> task}} {{/each}}
+        </ul>
+        {{else}}
+            <h1 class="msg">Log in/Register to see and add tasks.</h1>
+        {{/if}}
+        
+    </div>
+</body>
