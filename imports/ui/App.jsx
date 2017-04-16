@@ -28,7 +28,8 @@ class App extends Component {
         const text = this.state.taskTitle;
         Tasks.insert({
             text,
-            createdAt: new Date()
+            createdAt: new Date(),
+            checked: false
         });
         this.setState({ taskTitle: '' });
     }
@@ -62,6 +63,6 @@ App.propTypes = {
 // Exposing the collection data to React
 export default AppContainer = createContainer(() => {
     return {
-        tasks: Tasks.find({}).fetch()
+        tasks: Tasks.find({}, { sort: {createdAt: -1}}).fetch()
     };
 }, App);
