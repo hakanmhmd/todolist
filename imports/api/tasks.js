@@ -11,7 +11,7 @@ if (Meteor.isServer) {
     return Tasks.find({
       $or: [
         { private: { $ne: true } },
-        { owner: this.userId },
+        { ownerId: this.userId },
       ],
     });
   });
@@ -31,10 +31,11 @@ Meteor.methods({
             created: new Date(),
             ownerId: Meteor.userId(),
             ownerName: Meteor.user().username,
+            private: false,
         });
     },
 
-    'tasks.remove'(taskId){
+    'tasks.delete'(taskId){
         check(taskId, String);
         
         const task = Tasks.findOne(taskId);
@@ -64,7 +65,7 @@ Meteor.methods({
         
         const task = Tasks.findOne(taskId);
         //only the task owner can make it private
-        if(task.owner !== this.userId){
+        if(task.ownerId !== Meteor.userId()){
             throw new Meteor.Error("Not authorized to make private.");
         }
         Tasks.update(taskId, {$set: {private: setPrivate}});
