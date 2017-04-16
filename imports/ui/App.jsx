@@ -35,7 +35,9 @@ class App extends Component {
         Tasks.insert({
             text,
             createdAt: new Date(),
-            checked: false
+            checked: false,
+            ownerId: Meteor.userId(), //_id of the logger
+            ownerName: Meteor.user().username, // username og logger
         });
         this.setState({ taskTitle: '' });
     }
@@ -59,13 +61,14 @@ class App extends Component {
                     Hide Completed Tasks
                 </label>
                 <AccountsUIWrapper />
+                {this.props.currentUser ?
                 <form className="new-task" onSubmit={this.handleClick.bind(this)}>
                     <input
                         type="text"
                         onChange={ this.handleChange.bind(this) }
                         placeholder="Add new task"
                         value={this.state.taskTitle} />
-                </form> 
+                </form> : '' }
             </header>
     
             <ul>
@@ -79,12 +82,14 @@ class App extends Component {
 App.propTypes = {
     tasks: PropTypes.array.isRequired,
     incompleteCount: PropTypes.number.isRequired,
+    currentUser: PropTypes.object,
 };
 
 // Exposing the collection data to React
 export default AppContainer = createContainer(() => {
     return {
         tasks: Tasks.find({}, { sort: {createdAt: -1}}).fetch(),
-        incompleteCount: Tasks.find({checked: false}).count()
+        incompleteCount: Tasks.find({checked: false}).count(),
+        currentUser: Meteor.user()
     };
 }, App);

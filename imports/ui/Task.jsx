@@ -30,7 +30,9 @@ class Task extends Component {
                     checked={this.props.task.checked}
                     onClick={this.toggleChecked.bind(this)}
                 /> 
-                <span className="text">User: <strong>{this.props.task.owner}</strong> - {this.props.task.text}</span>
+                <span className="text">
+                    <strong>{this.props.task.ownerName}</strong> - {this.props.task.text}
+                </span>
             </li>
         );
     }

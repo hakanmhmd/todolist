@@ -6,7 +6,7 @@ import { Blaze } from 'meteor/blaze';
 class AccountsUIWrapper extends Component {
     componentDidMount(){
         this.view = Blaze.render(Template.loginButtons,
-        ReactDOM.findDOMNode(this.refs.container));
+            ReactDOM.findDOMNode(this.refs.container));
     }
 
     componentWillUnMount(){
