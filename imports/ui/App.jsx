@@ -30,7 +30,7 @@ class App extends Component {
             text,
             createdAt: new Date()
         });
-        this.setState({taskTitle: ''});
+        this.setState({ taskTitle: '' });
     }
     
     render() {
@@ -42,7 +42,8 @@ class App extends Component {
                     <input
                         type="text"
                         onChange={ this.handleChange.bind(this) }
-                        placeholder="Add new task" />
+                        placeholder="Add new task"
+                        value={this.state.taskTitle} />
                 </form> 
             </header>
     
