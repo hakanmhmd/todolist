@@ -4,6 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import {Tasks} from '../api/tasks.js';
 import Task from './Task.jsx';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
+import { Meteor } from 'meteor/meteor';
 
 // App component - represents the whole app
 class App extends Component {
@@ -32,13 +33,7 @@ class App extends Component {
     handleClick(e) {
         e.preventDefault();
         const text = this.state.taskTitle;
-        Tasks.insert({
-            text,
-            createdAt: new Date(),
-            checked: false,
-            ownerId: Meteor.userId(), //_id of the logger
-            ownerName: Meteor.user().username, // username og logger
-        });
+        Meteor.call('tasks.insert', text);
         this.setState({ taskTitle: '' });
     }
 
